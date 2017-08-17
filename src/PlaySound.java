@@ -1,3 +1,5 @@
+import java.util.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -11,17 +13,24 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+//All notes recorded as quarter note at 120 BPM
+
 public class PlaySound extends JFrame{
 
     private Clip clip;
+    private String note;
 
     public static void main(String [] args) {
 
-        PlaySound app = new PlaySound();
+        System.out.println("Enter note to be played: ");
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        PlaySound one = new PlaySound(str);
 
     }
 
-    public PlaySound() {
+    public PlaySound(String note) {
+        this.note = note;
         JButton play = new JButton("Play");
         play.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
@@ -55,8 +64,8 @@ private void SoundEffect(URL url) {
 // Play or Re-play the sound effect from the beginning, by rewinding.
 public void playTheSound() {
 
-    //String path = "../Notes/C4.wav";
-    URL url = getClass().getResource("/resources/notes/F#3.wav");//You can change this to whatever other sound you have
+    String path = "/resources/notes/" + note + ".wav";
+    URL url = getClass().getResource(path);//You can change this to whatever other sound you have
     SoundEffect(url);//this method will load the sound
 
     if (clip.isRunning())
