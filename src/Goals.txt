@@ -1,5 +1,0 @@
-Things to do next:
-
-- Make each note value one sixteenth note triplet [1/6th of current value]
-- Make data structure for notes to be played consecutively (X)
-- Make C-major sweep arpeggio

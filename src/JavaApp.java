@@ -12,10 +12,10 @@ import javax.sound.sampled.AudioSystem;
 
 class app_frame extends JFrame{
 
-	arpeggio c_major = new arpeggio();
+	arpeggio g_major = new arpeggio();
 
 	void makePackFrame(){
-		setTitle("C Major Arpeggio");
+		setTitle("G Major Arpeggio");
 		setLayout(new FlowLayout());
 		addButton();
 		pack();
@@ -27,8 +27,8 @@ class app_frame extends JFrame{
 		JButton play = new JButton("play arpeggio");
 		play.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-        	c_major.makeWAV();
-            c_major.playArpeggio();
+        	g_major.makeWAV();
+            g_major.playArpeggio();
         }
     });
 		add(play);

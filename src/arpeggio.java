@@ -17,23 +17,30 @@ public class arpeggio{
 	private ArrayList<sound> arr = new ArrayList<sound>();
     private URL url=null;
     private Clip clip;
+    //change duration for faster arpeggio. higher value = faster arpeggio.
+    private int value=12;
 
     public arpeggio(){
-        arr.add(new sound("C4"));
-        arr.add(new sound("E4"));
+        arr.add(new sound("G3"));
+        arr.add(new sound("B3"));
+        arr.add(new sound("D4"));
         arr.add(new sound("G4"));
-        arr.add(new sound("C5"));
+        arr.add(new sound("B4"));
+        arr.add(new sound("D5"));
     }
 
 	public void makeWAV(){
         try{
         AudioInputStream first=null;
+
 		for(int i=0; i<arr.size(); ++i){
             if(i==0){
                 first = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir")+arr.get(i).location));
+                first = new AudioInputStream(first,first.getFormat(),first.getFrameLength()/value);
             }
             else{
 	            AudioInputStream second = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir")+arr.get(i).location));
+                second = new AudioInputStream(second,second.getFormat(),second.getFrameLength()/value); 
                                  first = new AudioInputStream(
                                                  new SequenceInputStream(first,second),
                                                  first.getFormat(),
@@ -41,6 +48,14 @@ public class arpeggio{
                 
             }
 		}
+        for(int j=arr.size()-1; j>=0;--j){
+            AudioInputStream second = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir")+arr.get(j).location));
+                second = new AudioInputStream(second,second.getFormat(),second.getFrameLength()/value); 
+                                 first = new AudioInputStream(
+                                                 new SequenceInputStream(first,second),
+                                                 first.getFormat(),
+                                                 first.getFrameLength() + second.getFrameLength());
+        }
         AudioSystem.write(first,
                           AudioFileFormat.Type.WAVE,
                           new File(System.getProperty("user.dir")+"/arpeggio.wav"));
@@ -70,7 +85,8 @@ public class arpeggio{
 
 public void playArpeggio() {
     SoundEffect(url);
-    clip.start();
+    clip.loop(3);
+    //clip.start();
 }
 
 }
