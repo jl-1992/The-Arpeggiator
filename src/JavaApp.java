@@ -27,10 +27,17 @@ class app_frame extends JFrame{
 		JButton play = new JButton("play arpeggio");
 		play.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-        	g_major.makeWAV();
-            g_major.playArpeggio();
+        	if(g_major.isPlaying()==false){
+        		g_major.makeWAV();
+            	g_major.playArpeggio();
+            	play.setText("stop");
+            }
+            else{
+            	g_major.stop();
+            	play.setText("play arepeggio");
+            }
         }
-    });
+    	});
 		add(play);
 	}	
 }

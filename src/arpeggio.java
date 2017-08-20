@@ -17,8 +17,9 @@ public class arpeggio{
 	private ArrayList<sound> arr = new ArrayList<sound>();
     private URL url=null;
     private Clip clip;
-    //change duration for faster arpeggio. higher value = faster arpeggio.
+    //change value for faster arpeggio. higher value = faster arpeggio.
     private int value=12;
+    private boolean is_playing = false;
 
     public arpeggio(){
         arr.add(new sound("G3"));
@@ -85,8 +86,17 @@ public class arpeggio{
 
 public void playArpeggio() {
     SoundEffect(url);
-    clip.loop(3);
-    //clip.start();
+    is_playing=true;
+    clip.loop(clip.LOOP_CONTINUOUSLY);
+}
+
+public boolean isPlaying(){
+    return is_playing;
+}
+
+public void stop(){
+    is_playing=false;
+    clip.stop();
 }
 
 }
