@@ -21,13 +21,10 @@ public class arpeggio{
     private int value=12;
     private boolean is_playing = false;
 
-    public arpeggio(){
-        arr.add(new sound("G3"));
-        arr.add(new sound("B3"));
-        arr.add(new sound("D4"));
-        arr.add(new sound("G4"));
-        arr.add(new sound("B4"));
-        arr.add(new sound("D5"));
+    public void makeArpeggio(String[] s){
+        arr.clear();
+        for(int i=0; i<s.length; ++i)
+            arr.add(new sound(s[i]));
     }
 
 	public void makeWAV(){
@@ -70,7 +67,7 @@ public class arpeggio{
         }
 	}
 
-	private void SoundEffect(URL url) {
+	private void createClip(URL url) {
     try {
         AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
         clip = AudioSystem.getClip();
@@ -85,7 +82,7 @@ public class arpeggio{
 }
 
 public void playArpeggio() {
-    SoundEffect(url);
+    createClip(url);
     is_playing=true;
     clip.loop(clip.LOOP_CONTINUOUSLY);
 }
@@ -97,6 +94,7 @@ public boolean isPlaying(){
 public void stop(){
     is_playing=false;
     clip.stop();
+   // clip.close();
 }
 
 }
