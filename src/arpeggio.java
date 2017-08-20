@@ -18,7 +18,7 @@ public class arpeggio{
     private URL url=null;
     private Clip clip;
     //change value for faster arpeggio. higher value = faster arpeggio.
-    private int value=12;
+    private int value=12; //~78 bpm
     private boolean is_playing = false;
 
     public void makeArpeggio(String[] s){
