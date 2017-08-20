@@ -10,7 +10,7 @@ public class scaleList{
 		String[] f_major = {"F3", "A3", "C4", "F4", "A4", "C5"};
 		String[] f_minor = {"F3", "G#3", "C4", "F4", "G#4", "C5"};
 		String[] f_sharp_major = {"F#3", "A#3", "C#4", "F#4", "A#4", "C#5"};
-		String[] f_sharp_minor = {"F$3", "A3", "C#4", "F#4", "A4", "C#5"};
+		String[] f_sharp_minor = {"F#3", "A3", "C#4", "F#4", "A4", "C#5"};
 		String[] g_major = {"G3", "B3", "D4", "G4", "B4", "D5"};
 		String[] g_minor = {"G3", "A#3", "D4", "G4", "A#4", "D5"};
 		String[] g_sharp_major = {"G#3", "C4", "D#4", "G#4", "C5", "D#5"};
