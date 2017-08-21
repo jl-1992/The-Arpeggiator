@@ -13,8 +13,10 @@ class app_frame extends JFrame{
 
 	arpeggio scale = new arpeggio();
 	scaleList list = new scaleList();
+	bpmList blist = new bpmList();
 	String note="";
 	String key_type = "";
+	String bpm = "";
 
 	JPanel panel = new JPanel();
 
@@ -22,11 +24,11 @@ class app_frame extends JFrame{
 		setTitle("The-Arpeggiator");
 		setLayout(new FlowLayout());
 		addLabel();
+		addBPMbox();
 		addNoteBox();
 		addKeyBox();
 		addPlayButton();
 		pack();
-		//setSize(500,500);
 		setLocation(430,100);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,8 +36,25 @@ class app_frame extends JFrame{
 
 	void addLabel(){
 		add(panel);
-		JLabel label = new JLabel("Select scale from dropdown list: ");
+		JLabel label = new JLabel("Select BPM and scale from dropdown lists: ");
 		panel.add(label);
+	}
+	
+	void addBPMbox(){
+		String[] bpmlist = {"40","50", "65", "80", "90","105",
+				"115","130","140","155","170","180","200",
+				"210","220","235","245","260"};
+		JComboBox<String> bpmbox = new JComboBox<String>(bpmlist);
+		bpmbox.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        	JComboBox combo = (JComboBox) e.getSource();
+    		bpm = (String) combo.getSelectedItem();
+    		scale.setValue(blist.bpmMap.get(bpm));
+        }
+    	});
+    	bpm = (String) bpmbox.getSelectedItem();
+    	scale.setValue(blist.bpmMap.get(bpm));
+    	panel.add(bpmbox);
 	}
 
 	void addNoteBox(){

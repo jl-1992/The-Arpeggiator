@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -15,10 +14,8 @@ import java.io.SequenceInputStream;
 public class arpeggio{
 
 	private ArrayList<sound> arr = new ArrayList<sound>();
-    private URL url=null;
     private Clip clip;
-    //change value for faster arpeggio. higher value = faster arpeggio.
-    private int value=12; //~78 bpm
+    private int value=12;
     private boolean is_playing = false;
 
     public void makeArpeggio(String[] s){
@@ -57,7 +54,6 @@ public class arpeggio{
         AudioSystem.write(first,
                           AudioFileFormat.Type.WAVE,
                           new File(System.getProperty("user.dir")+"/arpeggio.wav"));
-        url = getClass().getResource("/arpeggio.wav");
         }
         catch (UnsupportedAudioFileException e) {
                 e.printStackTrace();
@@ -67,9 +63,9 @@ public class arpeggio{
         }
 	}
 
-	private void createClip(URL url) {
+	private void createClip() {
     try {
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(System.getProperty("user.dir")+"/arpeggio.wav"));
         clip = AudioSystem.getClip();
         clip.open(audioInputStream);
     } catch (UnsupportedAudioFileException e) {
@@ -82,7 +78,7 @@ public class arpeggio{
 }
 
 public void playArpeggio() {
-    createClip(url);
+    createClip();
     is_playing=true;
     clip.loop(clip.LOOP_CONTINUOUSLY);
 }
@@ -91,10 +87,13 @@ public boolean isPlaying(){
     return is_playing;
 }
 
+public void setValue(int v){
+	value=v;
+}
+
 public void stop(){
     is_playing=false;
     clip.stop();
-   // clip.close();
 }
 
 }
