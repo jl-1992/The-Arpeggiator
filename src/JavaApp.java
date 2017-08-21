@@ -23,8 +23,9 @@ class app_frame extends JFrame{
 	void makeFrame(){
 		setTitle("The-Arpeggiator");
 		setLayout(new FlowLayout());
-		addLabel();
+		addbpmLabel();
 		addBPMbox();
+		addScaleLabel();
 		addNoteBox();
 		addKeyBox();
 		addPlayButton();
@@ -34,9 +35,14 @@ class app_frame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	void addLabel(){
+	void addbpmLabel(){
 		add(panel);
-		JLabel label = new JLabel("Select BPM and scale from dropdown lists: ");
+		JLabel label = new JLabel("Select BPM: ");
+		panel.add(label);
+	}
+	
+	void addScaleLabel(){
+		JLabel label = new JLabel("Select Scale: ");
 		panel.add(label);
 	}
 	
