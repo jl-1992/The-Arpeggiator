@@ -8,8 +8,10 @@ import java.awt.FlowLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-class app_frame extends JFrame{
+class arpeggiator extends JFrame{
 
 	arpeggio scale = new arpeggio();
 	scaleList list = new scaleList();
@@ -20,7 +22,7 @@ class app_frame extends JFrame{
 
 	JPanel panel = new JPanel();
 
-	void makeFrame(){
+	public arpeggiator(){
 		setTitle("The-Arpeggiator");
 		setLayout(new FlowLayout());
 		addbpmLabel();
@@ -32,7 +34,8 @@ class app_frame extends JFrame{
 		pack();
 		setLocation(430,100);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addCloseEvent();
 	}
 
 	void addbpmLabel(){
@@ -109,13 +112,15 @@ class app_frame extends JFrame{
         }
     	});
 		panel.add(play);
-	}	
-}
-
-public class JavaApp{
-
-	public static void main(String[] args){
-		app_frame frame = new app_frame();
-		frame.makeFrame();
+	}
+	
+	void addCloseEvent(){
+		addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent e){
+				scale.stop();
+				setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+			}
+		});
 	}
 }
