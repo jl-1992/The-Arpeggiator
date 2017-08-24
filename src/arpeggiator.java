@@ -118,7 +118,8 @@ class arpeggiator extends JFrame{
 		addWindowListener(new WindowAdapter(){
 			@Override
 			public void windowClosing(WindowEvent e){
-				scale.stop();
+				if(scale.isPlaying())
+					scale.stop();
 				setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 			}
 		});
