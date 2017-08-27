@@ -18,6 +18,7 @@ public class MusicTools extends JFrame{
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		addLabel();
 		addArpeggiator();
+		addCreateOwn();
 		pack();
 		setLocation(430,100);
 		//setSize(500,500);
@@ -35,17 +36,27 @@ public class MusicTools extends JFrame{
 	}
 	
 	private void addArpeggiator(){
-		JButton arp = new JButton("The-Arpeggiator");
+		JButton arp = new JButton("Practice Arpeggio Sweeps");
 		arp.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	        	arpeggiator frame = new arpeggiator();
+	        	new arpeggiator();
+	        }
+	    	});
+		panel.add(arp);
+	}
+	
+	private void addCreateOwn(){
+		JButton arp = new JButton("Create Own Arpeggio");
+		arp.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	new create_own_arpeggio();
 	        }
 	    	});
 		panel.add(arp);
 	}
 
 	public static void main(String[] args){
-		MusicTools m = new MusicTools();
+		new MusicTools();
 	}
 	
 }
