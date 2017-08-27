@@ -23,6 +23,13 @@ public class arpeggio{
         for(int i=0; i<s.length; ++i)
             arr.add(new sound(s[i]));
     }
+    
+    public void makeArpeggio(String[] gna, guitarNoteList l){
+        arr.clear();
+        for(int i=0; i<gna.length; ++i){
+            arr.add(new sound(l.myMap.get(gna[i])));
+        }
+    }
 
 	public void makeWAV(){
         try{

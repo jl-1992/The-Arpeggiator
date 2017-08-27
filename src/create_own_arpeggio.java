@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -17,12 +18,12 @@ public class create_own_arpeggio extends JFrame{
 	guitarNoteList gnlist = new guitarNoteList();
 	bpmList blist = new bpmList();
 	String bpm = "";
-	String string = "";
-	String fret="";
-	
-	JPanel panel = new JPanel();
+	String[] note_list = new String[1];
+	int layer=0;
+	ArrayList<noteLayer> noteLayerList = new ArrayList<noteLayer>();
 
 	Box hb = Box.createHorizontalBox();
+	Box vb = Box.createVerticalBox();
 	
 	public create_own_arpeggio(){
 		setTitle("Create-arpeggio");
@@ -31,11 +32,13 @@ public class create_own_arpeggio extends JFrame{
 		add(hb, BorderLayout.NORTH);
 		addPlayButton();
 		addNoteLayer();
+		addAddNoteBox();
+		add(vb, BorderLayout.SOUTH);
 		pack();
 		setLocation(300,100);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		//addCloseEvent();
+		addCloseEvent();
 	}
 
 	
@@ -63,42 +66,62 @@ public class create_own_arpeggio extends JFrame{
 	}
 
 	void addNoteLayer(){
-		String[] strings = {"E_high", "B", "G", "D", "A", "E_low"};
-		Box nb = Box.createHorizontalBox();
-		add(nb, BorderLayout.SOUTH);
-		nb.add(new JLabel("Note 1:"));
-		nb.add(Box.createHorizontalStrut(25));
-		nb.add(new JLabel("String:"));
-		JComboBox<String> stringBox = new JComboBox<String>(strings);
-		stringBox.addActionListener(new ActionListener() {
+		noteLayer n = new noteLayer(layer);
+		vb.add(n.nb);
+		noteLayerList.add(n);
+		++layer;
+	}
+	
+	void deleteNoteLayer(){
+		--layer;
+		noteLayer n = noteLayerList.get(layer);
+		vb.remove(n.nb);
+		noteLayerList.remove(layer);
+	}
+	
+	void addAddNoteBox(){
+		JButton add_note_box = new JButton("add note");
+		add_note_box.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-        	JComboBox combo = (JComboBox) e.getSource();
-    		string = (String) combo.getSelectedItem();
+        	//if(layer>0)
+        		//addDeleteNoteBox();
+        	add_note_box.setVisible(false);
+        	addNoteLayer();
+        	note_list = addNote(note_list);
+        	addAddNoteBox();
         }
     	});
-    	string = (String) stringBox.getSelectedItem();
-    	nb.add(stringBox);
-    	nb.add(new JLabel("Fret:"));
-    	String[] frets = {"0", "1", "2", "3", "4", "5", "6", "7",
-    					  "8", "9", "10", "11", "12", "13", "14",
-    					  "15", "16", "17", "18", "19", "20", "21",
-    					  "22", "23", "24"};
-    	JComboBox<String> fretBox = new JComboBox<String>(frets);
-		fretBox.addActionListener(new ActionListener() {
+		vb.add(add_note_box);
+	}
+	
+	void addDeleteNoteBox(){
+		JButton delete_note_box = new JButton("delete note");
+		delete_note_box.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-        	JComboBox combo = (JComboBox) e.getSource();
-    		fret = (String) combo.getSelectedItem();
+        	deleteNoteLayer();
+        	if(layer==0){
+        		delete_note_box.setVisible(false);
+        		note_list=deleteNote(note_list);
+        	}
+        	else{
+        		note_list = deleteNote(note_list);
+        		addDeleteNoteBox();
+        	}
         }
     	});
-    	fret = (String) fretBox.getSelectedItem();
-    	nb.add(fretBox);
+		vb.add(delete_note_box);
 	}
 
 	void addPlayButton(){
 		JButton play = new JButton("play arpeggio");
 		play.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-        	//scale.makeArpeggio(list.scales.get(note + " " +key_type));
+        	int i=0;
+        	for(noteLayer n : noteLayerList){
+        		note_list[i]= n.note;
+        		++i;
+        	}
+        	scale.makeArpeggio(note_list,gnlist);
     		scale.makeWAV();
         	if(scale.isPlaying()==false){
             	scale.playArpeggio();
@@ -111,6 +134,16 @@ public class create_own_arpeggio extends JFrame{
         }
     	});
 		hb.add(play);
+	}
+	
+	String[] addNote(String[] gna){
+		String[] arp = new String[gna.length+1];
+		return arp;
+	}
+	
+	String[] deleteNote(String[] gna){
+		String[] arp = new String[gna.length-1];
+		return arp;
 	}
 	
 	void addCloseEvent(){
