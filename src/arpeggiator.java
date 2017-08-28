@@ -87,8 +87,6 @@ class arpeggiator extends JFrame{
         public void actionPerformed(ActionEvent e) {
         	JComboBox combo = (JComboBox) e.getSource();
     		key_type = (String) combo.getSelectedItem();
-    		scale.makeArpeggio(list.scales.get(note+" "+key_type));
-    		scale.makeWAV();
         }
     	});
     	key_type = (String) box.getSelectedItem();
