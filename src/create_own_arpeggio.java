@@ -20,6 +20,7 @@ public class create_own_arpeggio extends JFrame{
 	String bpm = "";
 	String[] note_list = new String[1];
 	int layer=0;
+	JButton delete_note_box = new JButton("delete note");
 	ArrayList<noteLayer> noteLayerList = new ArrayList<noteLayer>();
 
 	Box hb = Box.createHorizontalBox();
@@ -83,30 +84,30 @@ public class create_own_arpeggio extends JFrame{
 		JButton add_note_box = new JButton("add note");
 		add_note_box.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-        	//if(layer>0)
-        		//addDeleteNoteBox();
         	add_note_box.setVisible(false);
         	addNoteLayer();
         	note_list = addNote(note_list);
         	addAddNoteBox();
+        	addDeleteNoteBox();
+        	pack();
         }
     	});
 		vb.add(add_note_box);
 	}
 	
 	void addDeleteNoteBox(){
-		JButton delete_note_box = new JButton("delete note");
+		if(layer>1){
+			delete_note_box.setVisible(false);
+			delete_note_box = new JButton("delete note");
+		}
 		delete_note_box.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
+        	delete_note_box.setVisible(false);
         	deleteNoteLayer();
-        	if(layer==0){
-        		delete_note_box.setVisible(false);
-        		note_list=deleteNote(note_list);
-        	}
-        	else{
-        		note_list = deleteNote(note_list);
+        	note_list = deleteNote(note_list);
+        	if(layer>1)
         		addDeleteNoteBox();
-        	}
+        	pack();
         }
     	});
 		vb.add(delete_note_box);
