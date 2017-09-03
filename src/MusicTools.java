@@ -19,6 +19,7 @@ public class MusicTools extends JFrame{
 		addLabel();
 		addArpeggiator();
 		addCreateOwn();
+		addTuner();
 		pack();
 		setLocation(430,100);
 		//setSize(500,500);
@@ -50,6 +51,16 @@ public class MusicTools extends JFrame{
 		arp.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	new create_own_arpeggio();
+	        }
+	    	});
+		panel.add(arp);
+	}
+	
+	private void addTuner(){
+		JButton arp = new JButton("Tuner");
+		arp.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	new tuner();
 	        }
 	    	});
 		panel.add(arp);
